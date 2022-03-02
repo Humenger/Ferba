@@ -1,15 +1,13 @@
 package cn.humenger.ferba.action;
 
-import cn.humenger.ferba.CommandUtils;
-import cn.humenger.ferba.Jars;
-import cn.humenger.ferba.Menus;
-import cn.humenger.ferba.Windows;
+import cn.humenger.ferba.*;
 
 public class FridaMenu extends Menus.Menu {
     public FridaMenu(Menus.Menu parent) {
         super(parent);
         addOptions(
-                new Menus.MenuOption("setup frida-server arm64", "", new SetupFridaServerAction())
+                new Menus.MenuOption("setup frida-server arm64", "", new SetupFridaServerAction()),
+                new Menus.MenuOption("jni trace", "", new JNITraceAction())
         );
     }
 
@@ -67,6 +65,20 @@ public class FridaMenu extends Menus.Menu {
             System.out.println(result.data);
             System.out.println("------------[setup frida server]-----------");
 
+        }
+    }
+    static class JNITraceAction extends Menus.MenuAction{
+        @Override
+        public void doAction() {
+            if(!CommandUtils.run("where jnitrace").data.contains("jnitrace")){
+                System.out.println("please install jnitrace(https://github.com/chame1eon/jnitrace) first");
+            }else {
+                String packageName=Consoles.readString("please input app package name>");
+                String soName= Consoles.readString("please input target so name(eg.libxxxx.so)>");
+                System.out.println("-------------[Jni trace]------------");
+                System.out.println(CommandUtils.run("cmd /c start cmd /k jnitrace -l "+soName+" "+packageName));
+                System.out.println("-------------[Jni trace]------------");
+            }
         }
     }
 }
