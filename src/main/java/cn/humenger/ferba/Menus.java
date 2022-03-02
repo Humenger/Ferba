@@ -135,8 +135,8 @@ public class Menus {
     }
 
     public static class MenuOption implements Comparable<MenuOption> {
-        private final String name;
-        private final String summary;
+        public final String name;
+        public final String summary;
         private boolean show;
         private MenuAction action;
         private final int priority;

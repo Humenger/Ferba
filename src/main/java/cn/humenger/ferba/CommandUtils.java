@@ -22,18 +22,13 @@ public class CommandUtils {
 
     public static Result run(String commend) {
 
-        return run(commend, DEFAULT_CHARSET_NAME);
-    }
-
-
-    public static Result run(String commend, String charsetName) {
         StringTokenizer st = new StringTokenizer(commend);
         String[] commendArray = new String[st.countTokens()];
         for (int i = 0; st.hasMoreTokens(); i++) {
             commendArray[i] = st.nextToken();
         }
 
-        return run(Arrays.asList(commendArray), charsetName);
+        return run(Arrays.asList(commendArray), DEFAULT_CHARSET_NAME);
     }
 
     public static Result run(String... params) {

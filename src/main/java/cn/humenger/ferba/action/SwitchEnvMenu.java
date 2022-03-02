@@ -29,7 +29,7 @@ public class SwitchEnvMenu extends Menus.Menu{
             addOptions(new Menus.MenuOption(k,"",new Menus.MenuAction(){
                 @Override
                 public void doAction() {
-                    //todo set env
+                    System.out.printf("%s=%s%n",k,valueMap.get(k));
                     CommandUtils.run("cmd","/c","start", "set","PATH="+valueMap.get(k));
                 }
             }));
