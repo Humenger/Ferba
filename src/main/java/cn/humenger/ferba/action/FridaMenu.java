@@ -73,7 +73,13 @@ public class FridaMenu extends Menus.Menu {
             if(!CommandUtils.run("where jnitrace").data.contains("jnitrace")){
                 System.out.println("please install jnitrace(https://github.com/chame1eon/jnitrace) first");
             }else {
+                System.out.println("-----------[app process list]----------");
+                System.out.println(CommandUtils.run("adb shell su -c \"pm list packages -3\"").data);
+                System.out.println("-----------[app process list]----------");
                 String packageName=Consoles.readString("please input app package name>");
+                System.out.println("------------[app so list]-------------");
+                System.out.println(CommandUtils.run("adb shell su -c \"ls -l /data/user/0/"+packageName+"/lib/\"").data);
+                System.out.println("------------[app so list]-------------");
                 String soName= Consoles.readString("please input target so name(eg.libxxxx.so)>");
                 System.out.println("-------------[Jni trace]------------");
                 System.out.println(CommandUtils.run("cmd /c start cmd /k jnitrace -l "+soName+" "+packageName));
