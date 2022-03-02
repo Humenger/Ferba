@@ -51,9 +51,10 @@ public class FridaMenu extends Menus.Menu {
             //call adb shell su -c "chmod 777 /data/local/tmp/%fn%"
             //call adb shell su -c "./data/local/tmp/%fn%"
             String fridaServerPath = Jars.getFilePath("/tool/frida-server-15.1.2-android-arm64");
-            String adbPath=Windows.getAdbPath();
-            CommandUtils.Result result = CommandUtils.run(Windows.getAdbPath(), "push", fridaServerPath, "/data/local/tmp/fs1512_64");
+            String adbPath=String.format("\"%s\"",Windows.getAdbPath());
             System.out.println("------------[setup frida server]-----------");
+            CommandUtils.Result result = CommandUtils.run(Windows.getAdbPath(), "push", fridaServerPath, "/data/local/tmp/fs1512_64");
+            System.out.println(result.data);
             result = CommandUtils.run(adbPath, "forward", "tcp:27042", "tcp:27042");
             System.out.println(result.data);
             result = CommandUtils.run(adbPath, "forward", "tcp:27043", "tcp:27043");
@@ -62,7 +63,7 @@ public class FridaMenu extends Menus.Menu {
             System.out.println(result.data);
             result = CommandUtils.run(adbPath, "shell", "su", "-c", "\"chmod 777 /data/local/tmp/fs1512_64\"");
             System.out.println(result.data);
-            result = CommandUtils.run(adbPath, "shell", "su", "-c", "\"./data/local/tmp/fs1512_64\"");
+            result = CommandUtils.run("cmd /c start cmd /k "+adbPath+" shell su -c './data/local/tmp/fs1512_64'");
             System.out.println(result.data);
             System.out.println("------------[setup frida server]-----------");
 
