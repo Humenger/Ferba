@@ -10,6 +10,7 @@
         <element id="file-copy" path="$PROJECT_DIR$/tool/frida-server-15.1.2-android-arm64" />
       </element>
       <element id="module-output" name="Ferba.main" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/jansi-2.1.0.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

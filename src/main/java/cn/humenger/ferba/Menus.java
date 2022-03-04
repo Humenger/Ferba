@@ -1,5 +1,6 @@
 package cn.humenger.ferba;
 
+import java.io.IOException;
 import java.util.*;
 
 public class Menus {
@@ -157,7 +158,7 @@ public class Menus {
             this(title, summary, action, 0);
         }
 
-        public void doAction() {
+        public void doAction() throws IOException {
             if (this.action != null) {
                 this.action.doAction();
             }
@@ -180,7 +181,7 @@ public class Menus {
     }
 
     public static class MenuAction {
-        public void doAction() {
+        public void doAction() throws IOException {
             System.out.println("This is a default action!");
         }
     }

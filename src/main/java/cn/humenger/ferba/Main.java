@@ -1,9 +1,30 @@
 package cn.humenger.ferba;
 
 import cn.humenger.ferba.action.*;
+import org.fusesource.jansi.Ansi;
+import org.fusesource.jansi.AnsiConsole;
+
+import static org.fusesource.jansi.Ansi.Color.GREEN;
+import static org.fusesource.jansi.Ansi.ansi;
 
 public class Main {
     public static void main(String[] args) {
+        pre_main();
+        try {
+            do_main();
+        }catch (Throwable throwable){
+            throwable.printStackTrace();
+        }finally {
+            post_main();
+        }
+    }
+
+    private static void pre_main() {
+        AnsiConsole.systemInstall();
+        System.out.println( ansi().eraseScreen().fg(Ansi.Color.RED).a("Hello").fg(GREEN).a(" World").reset() );
+    }
+
+    private static void do_main() {
         printInfo();
         if (!checkEnv()) return;
         printMenu();
@@ -36,4 +57,9 @@ public class Main {
     private static void printInfo() {
         System.out.println("Ferba " + Ferba.VERSION_NAME);
     }
+    private static void post_main() {
+        AnsiConsole.systemUninstall();
+    }
+
+
 }
