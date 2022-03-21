@@ -1,64 +1,72 @@
 package cn.humenger.ferba;
 
 import cn.humenger.ferba.action.*;
-import org.fusesource.jansi.Ansi;
-import org.fusesource.jansi.AnsiConsole;
-
-import static org.fusesource.jansi.Ansi.Color.GREEN;
-import static org.fusesource.jansi.Ansi.ansi;
 
 public class Main {
     public static void main(String[] args) {
         pre_main();
         try {
-            do_main();
-        }catch (Throwable throwable){
+            do_main(args);
+        } catch (Throwable throwable) {
             throwable.printStackTrace();
-        }finally {
+        } finally {
             post_main();
         }
     }
 
     private static void pre_main() {
-        AnsiConsole.systemInstall();
-        System.out.println( ansi().eraseScreen().fg(Ansi.Color.RED).a("Hello").fg(GREEN).a(" World").reset() );
+//        AnsiConsole.systemInstall();
+//        System.out.println( ansi().eraseScreen().fg(Ansi.Color.RED).a("Hello").fg(GREEN).a(" World").reset() );
     }
 
-    private static void do_main() {
+    private static void do_main(String[] args) {
         printInfo();
         if (!checkEnv()) return;
-        printMenu();
+        if(Ferba.MODE_MENU) System.out.println("args.length:"+args.length);
+        if(args.length==0){
+            printMenu();
+        }else {
+            switch (args[0]){
+                case "-adb":
+                    System.out.println(Windows.getAdbPath());
+            }
+        }
+
     }
 
     private static void printMenu() {
+        Ferba.MODE_MENU=true;
         Menus.Menu rootMenu = new Menus.Menu(null);
         Menus.Menu switchEnvMenu = new SwitchEnvMenu(rootMenu);
         Menus.Menu fridaMenu = new FridaMenu(rootMenu);
 
         rootMenu.addOptions(
                 new Menus.MenuOption("(re)sign apk", "", new ApkSignAction()),
-                new Menus.MenuOption("push file","pc file -> mobile file",new PushFileAction()),
-                new Menus.MenuOption("pull file","mobile file -> pc file",new PullFileAction()),
+                new Menus.MenuOption("push file", "pc file -> mobile file", new PushFileAction()),
+                new Menus.MenuOption("pull file", "mobile file -> pc file", new PullFileAction()),
                 new Menus.MenuOption("switch environment", "switch environment for ndk-build,frida,python,go,...", new SwitchEnvMenu.SwitchEnvAction(switchEnvMenu)),
                 new Menus.MenuOption("pip install", "python pip install module", new PipInstallAction()),
-                new Menus.MenuOption("frida", "frida menu", new FridaMenu.FridaAction(fridaMenu))
+                new Menus.MenuOption("frida", "frida menu", new FridaMenu.FridaAction(fridaMenu)),
+                new Menus.MenuOption("dump so", "dump android so & fix", new SoDumpAction()),
+                new Menus.MenuOption("case sensitive", "enable case sensitive", new EnableCaseSensitiveAction())
         );
         rootMenu.show();
     }
 
     private static boolean checkEnv() {
         if (!Windows.isWindows()) {
-            System.out.println("Error: only support window OS");
+            if(Ferba.MODE_MENU) System.out.println("Error: only support window OS");
             return false;
         }
         return true;
     }
 
     private static void printInfo() {
-        System.out.println("Ferba " + Ferba.VERSION_NAME);
+        if(Ferba.MODE_MENU) System.out.println("Ferba " + Ferba.VERSION_NAME);
     }
+
     private static void post_main() {
-        AnsiConsole.systemUninstall();
+//        AnsiConsole.systemUninstall();
     }
 
 

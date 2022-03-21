@@ -158,7 +158,7 @@ public class Menus {
             this(title, summary, action, 0);
         }
 
-        public void doAction() throws IOException {
+        public void doAction() throws Exception {
             if (this.action != null) {
                 this.action.doAction();
             }
@@ -181,7 +181,7 @@ public class Menus {
     }
 
     public static class MenuAction {
-        public void doAction() throws IOException {
+        public void doAction() throws Exception {
             System.out.println("This is a default action!");
         }
     }

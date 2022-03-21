@@ -67,7 +67,7 @@ public class CommandUtils {
 
             closeStreamQuietly(is);
         }
-
+        System.out.println("{result} "+result.data);
         return result;
     }
 

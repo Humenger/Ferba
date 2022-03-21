@@ -6,43 +6,20 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 import java.util.StringTokenizer;
 
-public final class Windows {
-    public static final boolean DEBUG= System.getenv("FERBA_DEBUG") != null && !System.getenv("FERBA_DEBUG").trim().equalsIgnoreCase("false");
-    private static final String OS = System.getProperty("os.name").toLowerCase();
-    public static final String CRLF =System.getProperty("line.separator");
-    public static String userHome(){
-        return System.getProperty("user.home");
+public class Androids {
+    public static boolean isARM32(String adbPath){
+        String result=execCmd(String.format("%s shell getprop | grep abi",adbPath)).data;
+        System.out.println("result:"+result);
+        return result.contains("armeabi");
     }
-    public static void printSystemProperties(){
-        System.getProperties().list(System.out);
-        if(DEBUG)System.out.println("-------system env------");
-        for(String key:System.getenv().keySet()){
-            System.out.println(key+"="+System.getenv(key));
-        }
-    }
-    public static boolean isWindows(){
-        return OS.contains("windows");
-    }
-    public static String getAdbPath() {
-        Result result= execCmd("cmd /c wmic process list brief | findstr adb");
-//        CommandUtils.Result result=CommandUtils.run("tasklist /fi \"imagename eq adb.exe\" /fo list");
-        if(result.code==0){
-            if(DEBUG)System.out.println("[adb process list]:\n"+result.data);
-            String[] row=result.data.split("\r\n")[0].split(" +");
-            if(DEBUG)System.out.println("[process id]:"+row[3]);
-            result= execCmd("cmd /c wmic process where processid="+row[3]+" get executablepath");
-            if(result.code==0){
-                String[] split=result.data.split("(\r\n)+");
-                return split.length>=2?split[1]:"adb";
-            }
-        }
-        return "adb";
+    public static boolean isARM64(String adbPath){
+        String result=execCmd(String.format("%s shell getprop | grep abi",adbPath)).data;
+        return result.contains("arm64-v8a");
     }
     private  static Result execCmd(List<String> command, String charsetName) {
-        if(DEBUG)System.out.println("run:"+ command);
+        if(Ferba.MODE_MENU) System.out.println("run:"+ command);
         Result result = new Result();
         InputStream is = null;
         try {
@@ -87,4 +64,5 @@ public final class Windows {
         public int code;
         public String data;
     }
+
 }

@@ -16,7 +16,7 @@ public final class Jars {
             StreamUtils.copy(Jars.class.getResourceAsStream(name), new FileOutputStream(nameFile), true);
             return nameFile.getAbsolutePath();
         }catch (Exception e){
-            e.printStackTrace();
+            if(Ferba.MODE_MENU) e.printStackTrace();
             return "";
         }
     }

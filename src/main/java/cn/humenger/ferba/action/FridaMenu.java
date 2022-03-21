@@ -65,12 +65,20 @@ public class FridaMenu extends Menus.Menu {
             System.out.println(result.data);
             result = CommandUtils.run(adbPath, "forward", "tcp:27043", "tcp:27043");
             System.out.println(result.data);
-            result = CommandUtils.run(adbPath, "shell", "su", "-c", "\"setenforce 0\"");
+//            result = CommandUtils.run(adbPath, "shell", "su", "-c", "\"setenforce 0\"");
+            result = CommandUtils.run(adbPath, "shell", "su", "root", "setenforce 0");
             System.out.println(result.data);
-            result = CommandUtils.run(adbPath, "shell", "su", "-c", "\"chmod 777 /data/local/tmp/fs1512_64\"");
+//            result = CommandUtils.run(adbPath, "shell", "su", "-c", "\"chmod 777 /data/local/tmp/fs1512_64\"");
+            result = CommandUtils.run(adbPath, "shell", "su", "root", "chmod 777 /data/local/tmp/fs1512_64");
             System.out.println(result.data);
-            result = CommandUtils.run("cmd /c start cmd /k "+adbPath+" shell su -c './data/local/tmp/fs1512_64'");
-            System.out.println(result.data);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    CommandUtils.Result result = CommandUtils.run("cmd /c start cmd /k "+adbPath+" shell su root ./data/local/tmp/fs1512_64");
+                    System.out.println(result.data);
+                }
+            }).start();
+
             System.out.println("------------[setup frida server]-----------");
 
         }
