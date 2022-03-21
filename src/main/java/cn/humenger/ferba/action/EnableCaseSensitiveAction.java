@@ -10,8 +10,8 @@ public class EnableCaseSensitiveAction extends Menus.MenuAction {
     public void doAction() throws Exception {
         String path= Consoles.readString("please input path> ");
         String batPath= Jars.getFilePath("/tool/enableCaseSensitive.bat","{target_path}",path);// because %1 cannot read input param
-        Consoles.printf("[result] ",CommandUtils.run(batPath).data);
+        Consoles.println("[result] ",CommandUtils.run(batPath).data);
         Thread.sleep(100);//delay 100 ms wait previous exec finish
-        Consoles.printf("[result] ",CommandUtils.run("fsutil.exe file queryCaseSensitiveInfo "+path,"GBK").data);//why GBK? because it's out is contains chinese character
+        Consoles.println("[result] ",CommandUtils.run("fsutil.exe file queryCaseSensitiveInfo "+path,"GBK").data);//why GBK? because it's out is contains chinese character
     }
 }

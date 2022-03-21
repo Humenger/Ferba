@@ -39,6 +39,7 @@ public class Main {
         Menus.Menu rootMenu = new Menus.Menu(null);
         Menus.Menu switchEnvMenu = new SwitchEnvMenu(rootMenu);
         Menus.Menu fridaMenu = new FridaMenu(rootMenu);
+        Menus.Menu vTxMenu = new HypervisorMenu(rootMenu);
 
         rootMenu.addOptions(
                 new Menus.MenuOption("(re)sign apk", "", new ApkSignAction()),
@@ -48,7 +49,8 @@ public class Main {
                 new Menus.MenuOption("pip install", "python pip install module", new PipInstallAction()),
                 new Menus.MenuOption("frida", "frida menu", new FridaMenu.FridaAction(fridaMenu)),
                 new Menus.MenuOption("dump so", "dump android so & fix", new SoDumpAction()),
-                new Menus.MenuOption("case sensitive", "enable case sensitive", new EnableCaseSensitiveAction())
+                new Menus.MenuOption("case sensitive", "enable case sensitive", new EnableCaseSensitiveAction()),
+                new Menus.MenuOption("hypervisor", "change hypervisor state", new HypervisorMenu.VTxAction(vTxMenu))
         );
         rootMenu.show();
     }

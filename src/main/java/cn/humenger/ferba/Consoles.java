@@ -11,7 +11,7 @@ public class Consoles {
 
     private static LineReader lineReader;
 
-    public static void printf(String... messages){
+    public static void println(String... messages){
         for (String msg:messages){
             System.out.print(msg);
         }

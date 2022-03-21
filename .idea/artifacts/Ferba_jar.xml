@@ -11,6 +11,7 @@
         <element id="file-copy" path="$PROJECT_DIR$/tool/SoFixer32" />
         <element id="file-copy" path="$PROJECT_DIR$/tool/SoFixer64" />
         <element id="file-copy" path="$PROJECT_DIR$/tool/enableCaseSensitive.bat" />
+        <element id="file-copy" path="$PROJECT_DIR$/tool/changeHypervisorState.bat" />
       </element>
       <element id="module-output" name="Ferba.main" />
       <element id="extracted-dir" path="$PROJECT_DIR$/libs/jansi-2.1.0.jar" path-in-jar="/" />
