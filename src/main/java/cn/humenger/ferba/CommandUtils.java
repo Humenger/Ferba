@@ -19,16 +19,17 @@ public class CommandUtils {
 
     private final static String DEFAULT_CHARSET_NAME = "UTF-8";
 
-
-    public static Result run(String commend) {
-
-        StringTokenizer st = new StringTokenizer(commend);
+    public static Result run(String command,String charset){
+        StringTokenizer st = new StringTokenizer(command);
         String[] commendArray = new String[st.countTokens()];
         for (int i = 0; st.hasMoreTokens(); i++) {
             commendArray[i] = st.nextToken();
         }
 
-        return run(Arrays.asList(commendArray), DEFAULT_CHARSET_NAME);
+        return run(Arrays.asList(commendArray), charset);
+    }
+    public static Result run(String command) {
+        return run(command,DEFAULT_CHARSET_NAME);
     }
 
     public static Result run(String... params) {

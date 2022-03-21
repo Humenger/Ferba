@@ -13,5 +13,4 @@ if exist "%temp%\getadmin.vbs" ( del "%temp%\getadmin.vbs" )
 pushd "%CD%"
 CD /D "%~dp0"
 :start
-@echo on
-fsutil.exe file SetCaseSensitiveInfo  %1 enable
+fsutil.exe file SetCaseSensitiveInfo {target_path} enable
