@@ -119,7 +119,7 @@ public class Menus {
             }
         }
         protected String buildOptionText(int i,MenuOption option){
-            return String.format("%d) %-24s  %s", i, option.name, option.summary);
+            return String.format("%2d) %-24s  %s", i, option.name, option.summary);
         }
         protected String getInputPrefix(){
             return "option >";
