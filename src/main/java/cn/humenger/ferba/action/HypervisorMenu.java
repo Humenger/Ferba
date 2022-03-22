@@ -37,7 +37,7 @@ public class HypervisorMenu extends Menus.Menu {
         public void doAction() throws Exception {
 //            String batPath= Jars.getFilePath("/tool/changeHypervisorState.bat","{launch_type}","off");
             Consoles.println(CommandUtils.run("bcdedit /set hypervisorlaunchtype off","GBK").data);
-            Consoles.println("take effect after restarting the computer");
+            Consoles.println("[result] take effect after restarting the computer");
         }
     }
     public static class VTxAutoAction extends Menus.MenuAction{
@@ -45,13 +45,13 @@ public class HypervisorMenu extends Menus.Menu {
         public void doAction() throws Exception {
 //            String batPath= Jars.getFilePath("/tool/changeHypervisorState.bat","{launch_type}","auto");
             Consoles.println(CommandUtils.run("bcdedit /set hypervisorlaunchtype auto","GBK").data);
-            Consoles.println("take effect after restarting the computer");
+            Consoles.println("[result] take effect after restarting the computer");
         }
     }
     public static class QueryAction extends Menus.MenuAction{
         @Override
         public void doAction() throws Exception {
-            Consoles.println(CommandUtils.run("cmd /c bcdedit | findstr hypervisorlaunchtype","GBK").data);
+            Consoles.println("[result] ",CommandUtils.run("cmd /c bcdedit | findstr hypervisorlaunchtype","GBK").data);
         }
     }
 }
