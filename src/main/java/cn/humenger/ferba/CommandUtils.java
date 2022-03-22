@@ -43,7 +43,7 @@ public class CommandUtils {
 
 
     public static Result run(List<String> commend, String charsetName) {
-        System.out.println("run:" + commend);
+//        System.out.println("run:" + commend);
         Result result = new Result();
         InputStream is = null;
         try {
@@ -68,7 +68,7 @@ public class CommandUtils {
 
             closeStreamQuietly(is);
         }
-        System.out.println("{result} "+result.data);
+//        System.out.println("{result} "+result.data);
         return result;
     }
 
