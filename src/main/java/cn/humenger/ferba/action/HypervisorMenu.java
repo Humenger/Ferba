@@ -9,8 +9,8 @@ public class HypervisorMenu extends Menus.Menu {
     public HypervisorMenu(Menus.Menu parent) {
         super(parent);
         addOptions(
-                new Menus.MenuOption("off","for android emulator",new VTxOffAction()),
-                new Menus.MenuOption("auto","for WSL & VMware & VirtualBox",new VTxAutoAction())
+                new Menus.MenuOption("off","for android emulator & virtual machine",new VTxOffAction()),
+                new Menus.MenuOption("auto","for WSL",new VTxAutoAction())
         );
     }
 
@@ -45,6 +45,12 @@ public class HypervisorMenu extends Menus.Menu {
             String batPath= Jars.getFilePath("/tool/changeHypervisorState.bat","{launch_type}","auto");
             Consoles.println(CommandUtils.run(batPath).data);
             Consoles.println("take effect after restarting the computer");
+        }
+    }
+    public static class QueryAction extends Menus.MenuAction{
+        @Override
+        public void doAction() throws Exception {
+
         }
     }
 }
