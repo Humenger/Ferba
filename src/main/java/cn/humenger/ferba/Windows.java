@@ -27,6 +27,10 @@ public final class Windows {
         return OS.contains("windows");
     }
     public static String getAdbPath() {
+       return getAdbPath("adb");
+    }
+
+    public static String getAdbPath(String defAdbPath) {
         Result result= execCmd("cmd /c wmic process list brief | findstr adb");
 //        CommandUtils.Result result=CommandUtils.run("tasklist /fi \"imagename eq adb.exe\" /fo list");
         if(result.code==0){
@@ -36,10 +40,10 @@ public final class Windows {
             result= execCmd("cmd /c wmic process where processid="+row[3]+" get executablepath");
             if(result.code==0){
                 String[] split=result.data.split("(\r\n)+");
-                return split.length>=2?split[1]:"adb";
+                return split.length>=2?split[1]:defAdbPath;
             }
         }
-        return "adb";
+        return defAdbPath;
     }
     private  static Result execCmd(List<String> command, String charsetName) {
         if(DEBUG)System.out.println("run:"+ command);

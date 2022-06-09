@@ -14,6 +14,7 @@ public class FridaMenu extends Menus.Menu {
         super(parent);
         addOptions(
                 new Menus.MenuOption("setup frida-server arm64", "", new SetupFridaServerAction()),
+                new Menus.MenuOption("setup frida-server arm64 v2", "", new SetupFridaServerV2Action()),
                 new Menus.MenuOption("jni trace", "", new JNITraceAction()),
                 new Menus.MenuOption("r0tracer", "", new R0TracerAction())
         );
@@ -75,6 +76,42 @@ public class FridaMenu extends Menus.Menu {
                 @Override
                 public void run() {
                     CommandUtils.Result result = CommandUtils.run("cmd /c start cmd /k "+adbPath+" shell su root ./data/local/tmp/fs1512_64");
+                    System.out.println(result.data);
+                }
+            }).start();
+
+            System.out.println("------------[setup frida server]-----------");
+
+        }
+    }
+    static class SetupFridaServerV2Action extends Menus.MenuAction {
+        @Override
+        public void doAction() {
+            //set /p src=please input frida server source file path:
+            //set /p fn=please input file name in /data/local/tmp/:
+            //call adb forward tcp:27042 tcp:27042
+            //call adb forward tcp:27043 tcp:27043
+            //call adb push %src% /data/local/tmp/%fn%
+            //call adb shell su -c "setenforce 0"
+            //call adb shell su -c "chmod 777 /data/local/tmp/%fn%"
+            //call adb shell su -c "./data/local/tmp/%fn%"
+            String fridaServerPath = Jars.getFilePath("/tool/frida-server-15.1.2-android-arm64");
+            String adbPath=String.format("\"%s\"",Windows.getAdbPath());
+            System.out.println("------------[setup frida server]-----------");
+            CommandUtils.Result result = CommandUtils.run(Windows.getAdbPath(), "push", fridaServerPath, "/data/local/tmp/fs1512_64");
+            System.out.println(result.data);
+            result = CommandUtils.run(adbPath, "forward", "tcp:27042", "tcp:27042");
+            System.out.println(result.data);
+            result = CommandUtils.run(adbPath, "forward", "tcp:27043", "tcp:27043");
+            System.out.println(result.data);
+            result = CommandUtils.run(adbPath, "shell", "su", "-c", "\"setenforce 0\"");
+            System.out.println(result.data);
+            result = CommandUtils.run(adbPath, "shell", "su", "-c", "\"chmod 777 /data/local/tmp/fs1512_64\"");
+            System.out.println(result.data);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    CommandUtils.Result result = CommandUtils.run("cmd /c start cmd /k "+adbPath+" shell su -c './data/local/tmp/fs1512_64'");
                     System.out.println(result.data);
                 }
             }).start();

@@ -28,7 +28,7 @@ public class Main {
         }else {
             switch (args[0]){
                 case "-adb":
-                    System.out.println(Windows.getAdbPath());
+                    System.out.println(args.length==2?Windows.getAdbPath(args[1]):Windows.getAdbPath());
             }
         }
 

@@ -8,13 +8,17 @@ version '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
 }
-
+compileJava{
+    options.compilerArgs.addAll(['-encoding','utf-8'])
+}
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
     implementation files("libs/jansi-2.1.0.jar")
     implementation files("libs/jline-3.21.0.jar")
 //    implementation("org.jline:jline:3.21.0")
+    implementation 'com.formdev:flatlaf:0.26'
+    implementation 'com.alibaba:fastjson:1.2.47'
 }
 
 test {
